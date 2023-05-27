@@ -29,7 +29,7 @@ level4_color = "#333333"
 level5_color = "#383838"
 primary_color = "#03DAC6"
 secondary_color = "#BB86FC"
-tertiary_color = "#3700B3"
+tertiary_color = "#AEC6CF"
 error_color = "#CF6679"
 
 #define dimensions
@@ -40,77 +40,86 @@ height = 500
 main_window = Tk()
 main_window.title("Nutrireader")
 main_window.geometry(str(width) + "x" + str(height))
-main_window.config(bg=bg_color)
+main_window.config(bg=level1_color)
 main_window.resizable(height=None, width=None)
 
 #create title frame
-title_frame = Frame(main_window, bg=level1_color, width=width, height = 50)
+title_frame = Frame(main_window, bg=level1_color, width=width, height = 100)
 title_frame.grid(row=0, column=0)
 title_frame.pack_propagate(False)
 
 #create title label
-title_label = Label(title_frame,text="Nutrireader",font=("Roboto", '30', 'bold'),bg=level1_color,fg="white")
+title_label = Label(title_frame,text="Nutrireader",font=("Satoshi", '30', 'bold'),bg=level1_color,fg=primary_color)
 title_label.pack()
+
+desc_label = Label(title_frame,text="The Best Way to an A in your health",font=("Satoshi", '12', 'italic'),bg=level1_color,fg=tertiary_color)
+desc_label.pack()
 
 #create frames, labels, and entries for ingredients
 data_frame = Frame(main_window, bg=level1_color)
 data_frame.grid(row=1, column=0)
 
 #serving size input
-serv_label1 = Label(data_frame, font=("Roboto", 10), text="Serving Size:", bg=level1_color, fg = 'white')
+serv_label1 = Label(data_frame, font=("Satoshi", 10), text="Serving Size:", bg=level1_color, fg = 'white')
 serv_label1.grid(row=0, column=0)
-serv_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+serv_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 serv_entry.grid(row=0, column=1)
-serv_label2 = Label(data_frame, font=("Roboto", 10), text="g", bg=level1_color, fg = 'white')
+serv_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 serv_label2.grid(row=0, column=2)
 
 #calories per serving
-cal_label1 = Label(data_frame, font=("Roboto", 10), text="Calories Per Serving:", bg=level1_color, fg = 'white')
+cal_label1 = Label(data_frame, font=("Satoshi", 10), text="Calories Per Serving:", bg=level1_color, fg = 'white')
 cal_label1.grid(row=1, column=0)
-cal_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+cal_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 cal_entry.grid(row=1, column=1)
-cal_label2 = Label(data_frame, font=("Roboto", 10), text="cal", bg=level1_color, fg = 'white')
+cal_label2 = Label(data_frame, font=("Satoshi", 10), text="cal", bg=level1_color, fg = 'white')
 cal_label2.grid(row=1, column=2)
 
 #saturated fat per serving
-sat_fat_label1 = Label(data_frame, font=("Roboto", 10), text="Saturated Fat Per Serving:", bg=level1_color, fg = 'white')
-sat_fat_label1.grid(row=2, column=0, sticky="E")
-sat_fat_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+sat_fat_label1 = Label(data_frame, font=("Satoshi", 10), text="Saturated Fat Per Serving:", bg=level1_color, fg = 'white')
+sat_fat_label1.grid(row=2, column=0)
+sat_fat_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sat_fat_entry.grid(row=2, column=1)
-sat_fat_label2 = Label(data_frame, font=("Roboto", 10), text="g", bg=level1_color, fg = 'white')
+sat_fat_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 sat_fat_label2.grid(row=2, column=2)
 
 #sodium per serving
-sodium_label1 = Label(data_frame, font=("Roboto", 10), text="Sodium Per Serving:", bg=level1_color, fg = 'white')
+sodium_label1 = Label(data_frame, font=("Satoshi", 10), text="Sodium Per Serving:", bg=level1_color, fg = 'white')
 sodium_label1.grid(row=3, column=0)
-sodium_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+sodium_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sodium_entry.grid(row=3, column=1)
-sodium_label2 = Label(data_frame, font=("Roboto", 10), text="mg", bg=level1_color, fg = 'white')
+sodium_label2 = Label(data_frame, font=("Satoshi", 10), text="mg", bg=level1_color, fg = 'white')
 sodium_label2.grid(row=3, column=2)
 
 #fiber per serving
-fiber_label1 = Label(data_frame, font=("Roboto", 10), text="Fiber Per Serving:", bg=level1_color, fg = 'white')
+fiber_label1 = Label(data_frame, font=("Satoshi", 10), text="Fiber Per Serving:", bg=level1_color, fg = 'white')
 fiber_label1.grid(row=4, column=0)
-fiber_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+fiber_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 fiber_entry.grid(row=4, column=1)
-fiber_label2 = Label(data_frame, font=("Roboto", 10), text="g", bg=level1_color, fg = 'white')
+fiber_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 fiber_label2.grid(row=4, column=2)
 
 #sugar per serving
-sugar_label1 = Label(data_frame, font=("Roboto", 10), text="Sugar Per Serving:", bg=level1_color, fg = 'white')
+sugar_label1 = Label(data_frame, font=("Satoshi", 10), text="Sugar Per Serving:", bg=level1_color, fg = 'white')
 sugar_label1.grid(row=5, column=0)
-sugar_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+sugar_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sugar_entry.grid(row=5, column=1)
-sugar_label2 = Label(data_frame, font=("Roboto", 10), text="g", bg=level1_color, fg = 'white')
+sugar_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 sugar_label2.grid(row=5, column=2)
 
 #protein per serving
-protein_label1 = Label(data_frame, font=("Roboto", 10), text="Protein Per Serving:", bg=level1_color, fg = 'white')
+protein_label1 = Label(data_frame, font=("Satoshi", 10), text="Protein Per Serving:", bg=level1_color, fg = 'white')
 protein_label1.grid(row=6, column=0)
-protein_entry = Entry(data_frame, font=("Roboto", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
+protein_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 protein_entry.grid(row=6, column=1)
-protein_label2 = Label(data_frame, font=("Roboto", 10), text="g", bg=level1_color, fg = 'white')
+protein_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 protein_label2.grid(row=6, column=2)
+
+#Summary of results
+summary_frame = Frame(main_window, bg=level1_color);
+summary_frame.grid(row=2, column=0)
+summary_label = Label(summary_frame, text="Enter Information for a Score",font=("Satoshi", '20', 'bold'),bg=level1_color,fg=secondary_color)
+summary_label.grid(row=0, column=0)
 
 #submit function
 def submit():
@@ -146,6 +155,7 @@ def capture():
 
         #populate fields
         result = list(result.document.fields.values())
+        
         serv_entry.insert(0, result[2])
         cal_entry.insert(0, result[0])
         fiber_entry.insert(0, result[1])
@@ -153,6 +163,21 @@ def capture():
         sat_fat_entry.insert(0, result[4])
         sodium_entry.insert(0, result[5])
         sugar_entry.insert(0, result[6])
+        #add zeros
+        if (serv_entry.get() == ""):
+            serv_entry.insert(0, str(0))
+        if (cal_entry.get() == ""):
+            cal_entry.insert(0, str(0))
+        if (fiber_entry.get() == ""):
+            fiber_entry.insert(0, str(0))
+        if (protein_entry.get() == ""):
+            protein_entry.insert(0, str(0))
+        if (sat_fat_entry.get() == ""):
+            sat_fat_entry.insert(0, str(0))
+        if (sodium_entry.get() == ""):
+            sodium_entry.insert(0, str(0))
+        if (sugar_entry.get() == ""):
+            sugar_entry.insert(0, str(0))
 
         #get rid of windows
         display_window.destroy()
