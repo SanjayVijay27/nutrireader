@@ -1,12 +1,11 @@
 from dotenv import load_dotenv
 import os
+import textwrap
 from tkinter import *
 from analyze import *
-from tkinter_webcam import webcam
 import cv2
 from PIL import Image, ImageTk
 from mindee import Client, documents
-# import base64
 
 #Load .env
 load_dotenv()
@@ -16,9 +15,6 @@ mindee_client = Client(api_key=os.getenv("API_KEY")).add_endpoint(
     account_name=os.getenv("ACCOUNT_NAME"),
     endpoint_name="nutrition_label",
 )
-
-#for field_name, field_values in result.document.fields.items():
-   # print(field_name, "=", field_values)
 
 #define colors
 bg_color = "#121212"
@@ -34,7 +30,7 @@ error_color = "#CF6679"
 
 #define dimensions
 width = 500
-height = 500
+height = 450
 
 #create main window
 main_window = Tk()
@@ -45,14 +41,15 @@ main_window.resizable(height=None, width=None)
 
 #create title frame
 title_frame = Frame(main_window, bg=level1_color, width=width, height = 100)
-title_frame.grid(row=0, column=0)
+title_frame.grid(row=0, column=0, pady=20)
 title_frame.pack_propagate(False)
 
 #create title label
 title_label = Label(title_frame,text="Nutrireader",font=("Satoshi", '30', 'bold'),bg=level1_color,fg=primary_color)
 title_label.pack()
 
-desc_label = Label(title_frame,text="The Best Way to an A in your health",font=("Satoshi", '12', 'italic'),bg=level1_color,fg=tertiary_color)
+#create description label
+desc_label = Label(title_frame,text="The Best Way to an A in your health",font=("Satoshi", '12', 'bold italic'),bg=level1_color,fg=tertiary_color)
 desc_label.pack()
 
 #create frames, labels, and entries for ingredients
@@ -61,69 +58,89 @@ data_frame.grid(row=1, column=0)
 
 #serving size input
 serv_label1 = Label(data_frame, font=("Satoshi", 10), text="Serving Size:", bg=level1_color, fg = 'white')
-serv_label1.grid(row=0, column=0)
+serv_label1.grid(row=0, column=0, sticky="E")
 serv_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 serv_entry.grid(row=0, column=1)
 serv_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
-serv_label2.grid(row=0, column=2)
+serv_label2.grid(row=0, column=2, sticky="W")
 
 #calories per serving
 cal_label1 = Label(data_frame, font=("Satoshi", 10), text="Calories Per Serving:", bg=level1_color, fg = 'white')
-cal_label1.grid(row=1, column=0)
+cal_label1.grid(row=1, column=0, sticky="E")
 cal_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 cal_entry.grid(row=1, column=1)
 cal_label2 = Label(data_frame, font=("Satoshi", 10), text="cal", bg=level1_color, fg = 'white')
-cal_label2.grid(row=1, column=2)
+cal_label2.grid(row=1, column=2, sticky="W")
 
 #saturated fat per serving
 sat_fat_label1 = Label(data_frame, font=("Satoshi", 10), text="Saturated Fat Per Serving:", bg=level1_color, fg = 'white')
-sat_fat_label1.grid(row=2, column=0)
+sat_fat_label1.grid(row=2, column=0, sticky="E")
 sat_fat_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sat_fat_entry.grid(row=2, column=1)
 sat_fat_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
-sat_fat_label2.grid(row=2, column=2)
+sat_fat_label2.grid(row=2, column=2, sticky="W")
 
 #sodium per serving
 sodium_label1 = Label(data_frame, font=("Satoshi", 10), text="Sodium Per Serving:", bg=level1_color, fg = 'white')
-sodium_label1.grid(row=3, column=0)
+sodium_label1.grid(row=3, column=0, sticky="E")
 sodium_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sodium_entry.grid(row=3, column=1)
 sodium_label2 = Label(data_frame, font=("Satoshi", 10), text="mg", bg=level1_color, fg = 'white')
-sodium_label2.grid(row=3, column=2)
+sodium_label2.grid(row=3, column=2, sticky="W")
 
 #fiber per serving
 fiber_label1 = Label(data_frame, font=("Satoshi", 10), text="Fiber Per Serving:", bg=level1_color, fg = 'white')
-fiber_label1.grid(row=4, column=0)
+fiber_label1.grid(row=4, column=0, sticky="E")
 fiber_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 fiber_entry.grid(row=4, column=1)
 fiber_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
-fiber_label2.grid(row=4, column=2)
+fiber_label2.grid(row=4, column=2, sticky="W")
 
 #sugar per serving
 sugar_label1 = Label(data_frame, font=("Satoshi", 10), text="Sugar Per Serving:", bg=level1_color, fg = 'white')
-sugar_label1.grid(row=5, column=0)
+sugar_label1.grid(row=5, column=0, sticky="E")
 sugar_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 sugar_entry.grid(row=5, column=1)
 sugar_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
-sugar_label2.grid(row=5, column=2)
+sugar_label2.grid(row=5, column=2, sticky="W")
 
 #protein per serving
 protein_label1 = Label(data_frame, font=("Satoshi", 10), text="Protein Per Serving:", bg=level1_color, fg = 'white')
-protein_label1.grid(row=6, column=0)
+protein_label1.grid(row=6, column=0, sticky="E")
 protein_entry = Entry(data_frame, font=("Satoshi", 10), width=4, bg=level3_color, fg=secondary_color, insertbackground=secondary_color)
 protein_entry.grid(row=6, column=1)
 protein_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
-protein_label2.grid(row=6, column=2)
-
-#Summary of results
-summary_frame = Frame(main_window, bg=level1_color);
-summary_frame.grid(row=2, column=0)
-summary_label = Label(summary_frame, text="Enter Information for a Score",font=("Satoshi", '20', 'bold'),bg=level1_color,fg=secondary_color)
-summary_label.grid(row=0, column=0)
+protein_label2.grid(row=6, column=2, sticky="W")
 
 #submit function
 def submit():
-    analyze(serv_entry.get(), cal_entry.get(), sat_fat_entry.get(), sodium_entry.get(), fiber_entry.get(), sugar_entry.get(), protein_entry.get())
+    #get results
+    score, text = get_info(float(serv_entry.get()), float(cal_entry.get()), float(sat_fat_entry.get()), float(sodium_entry.get()), float(fiber_entry.get()), float(sugar_entry.get()), float(protein_entry.get()), beverage=False)
+
+    #create window for summary
+    summary_window = Toplevel(main_window)
+    summary_window.title("Nutrireader Result")
+    summary_window.geometry("600x600")
+    summary_window.config(bg=level1_color)
+    summary_window.resizable(height=None, width=None)
+
+    #format text
+    text = '\n'.join(l for line in text.splitlines() for l in textwrap.wrap(line, width=80))
+
+    #color for score
+    score_color = primary_color
+    if (score < 40):
+        score_color = error_color
+    elif (score < 60):
+        score_color = secondary_color
+    elif (score < 80):
+        score_color = tertiary_color
+
+    #Summary of results
+    score_label = Label(summary_window, text="Your Score: " + str(score) +"/100",font=("Satoshi", '20', 'bold'),bg=level1_color,fg=score_color)
+    score_label.pack(pady=(0, 50))
+    summary_label = Label(summary_window, text=text, font=('Satoshi', '12', 'normal'), bg=level1_color, fg = tertiary_color)
+    summary_label.pack()
 
 #image vars
 webcam = cv2.VideoCapture(0)
@@ -163,6 +180,7 @@ def capture():
         sat_fat_entry.insert(0, result[4])
         sodium_entry.insert(0, result[5])
         sugar_entry.insert(0, result[6])
+
         #add zeros
         if (serv_entry.get() == ""):
             serv_entry.insert(0, str(0))
@@ -194,26 +212,30 @@ def open_cam():
             final_image = ImageTk.PhotoImage(selected_image)
             display_frame.imgtk = final_image
             display_frame.config(image=final_image)
-            display_frame.config(bg='blue')
-            #cam_window.destroy()
 
+        #animate frame
         display_frame.after(10, show_frames)
     #initialize frame
     cam_window = Toplevel(main_window)
-    display_frame = Label(cam_window, bg='red')
+    cam_window.config(bg=level1_color)
+    display_frame = Label(cam_window)
     display_frame.pack()
-    capture_button = Button(cam_window, text="Capture", bg=level4_color, fg='white', activebackground=level4_color, activeforeground=primary_color, command=capture)
+    capture_button = Button(cam_window, font=('Satoshi', '12', 'normal'), text="Capture", bg=level4_color, fg=error_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=capture)
     capture_button.pack()
     show_frames()
     cam_window.mainloop()
         
 #submit button
-submit_button = Button(data_frame, text="Submit", bg=level4_color, fg='white', activebackground=level4_color, activeforeground=primary_color, width=50, command=submit)
-submit_button.grid(row=7, column=0, columnspan=3)
+submit_button = Button(data_frame, text="Submit", font=('Satoshi', '12', 'normal'), bg=level4_color, fg=primary_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=submit)
+submit_button.grid(row=7, column=0, columnspan=3, pady=(20,0))
 
 #Camera button
-submit_button = Button(data_frame, text="Open Camera for Scanning", bg=level4_color, fg='white', activebackground=level4_color, activeforeground=primary_color, width=50, command=open_cam)
+submit_button = Button(data_frame, font=('Satoshi', '12', 'normal'), text="Open Camera for Scanning", bg=level4_color, fg=tertiary_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=open_cam)
 submit_button.grid(row=8, column=0, columnspan=3)
+
+#Credits
+credits_label = Label(main_window, text="Project for the 2023 Steel City Hacks Hackathon by Sanjay Vijay and Jack Whitman", font=('Satoshi', '10', 'italic'), bg = level1_color, fg = secondary_color, pady=20)
+credits_label.grid(row=2, column=0)
 
 #display main window
 main_window.mainloop()
