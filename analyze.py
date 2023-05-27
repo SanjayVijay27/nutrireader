@@ -31,7 +31,7 @@ def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage):
     nutrition_score = int(((features["fiber"] + features["protein"] - features["energy_density"] - features["sugar"] - features["sat_fat"] - features["salt"]) + 40) * 2)
 
     #Build and submit prompt to OpenAI
-    message = "Briefly explain the nutrition information of a food item with a score of " + str(nutrition_score) + "/100 which has "  + str(cals) + " calories, "  + str(sat_fat) + " grams of saturated fat, " + str(sodium) + " milligrams of sodium, "  + str(fiber) + " grams of fiber, " + str(sugar) + " grams of sugar, and " + str(protein) + " grams of protein in a " + str(serv_size) + " gram serving. Briefly explain potential alternatives."
+    message = "Explain the nutrition information of a food item with a score of " + str(nutrition_score) + "/100 which has "  + str(cals) + " calories, "  + str(sat_fat) + " grams of saturated fat, " + str(sodium) + " milligrams of sodium, "  + str(fiber) + " grams of fiber, " + str(sugar) + " grams of sugar, and " + str(protein) + " grams of protein in a " + str(serv_size) + " gram serving. Briefly explain potential alternatives."
     output = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": message}])
     
     #Return score and message result
