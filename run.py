@@ -30,7 +30,7 @@ error_color = "#CF6679"
 
 #define dimensions
 width = 500
-height = 450
+height = 500
 
 #create main window
 main_window = Tk()
@@ -112,15 +112,45 @@ protein_entry.grid(row=6, column=1)
 protein_label2 = Label(data_frame, font=("Satoshi", 10), text="g", bg=level1_color, fg = 'white')
 protein_label2.grid(row=6, column=2, sticky="W")
 
+#radio buttons for type of item
+item_type = IntVar()
+food_option_frame = Frame(data_frame, bg=level1_color)
+food_option_frame.grid(row = 7, column=0, columnspan=3)
+type_label = Label(food_option_frame, font=("Satoshi", 10), text="Item Type: ", fg = 'white', bg=level1_color)
+type_label.grid(row=0,column=0,sticky="E")
+food_button = Radiobutton(food_option_frame, text = "Food", variable=item_type, value = 0, font = ("Satoshi", 10), fg=tertiary_color, bg=level1_color, activeforeground=primary_color, activebackground=level1_color, selectcolor=level1_color)
+food_button.grid(row=0,column=1)
+drink_button = Radiobutton(food_option_frame, text = "Drink", variable=item_type, value = 1, font = ("Satoshi", 10), fg=tertiary_color, bg=level1_color, activeforeground=primary_color, activebackground=level1_color, selectcolor=level1_color)
+drink_button.grid(row=0,column=2)
+
+#radio buttons for verboseness
+explanation_type = IntVar()
+ex_option_frame = Frame(data_frame, bg=level1_color)
+ex_option_frame.grid(row = 8, column=0, columnspan=3)
+ex_label = Label(ex_option_frame, font=("Satoshi", 10), text="Explanation Length: ", bg=level1_color, fg = 'white')
+ex_label.grid(row=0,column=0,sticky="E")
+short_button = Radiobutton(ex_option_frame, text = "Short", variable=explanation_type, value = 0, font = ("Satoshi", 10), fg=tertiary_color, bg=level1_color, activeforeground=primary_color, activebackground=level1_color, selectcolor=level1_color)
+short_button.grid(row=0,column=1)
+med_button = Radiobutton(ex_option_frame, text = "Medium", variable=explanation_type, value = 1, font = ("Satoshi", 10), fg=tertiary_color, bg=level1_color, activeforeground=primary_color, activebackground=level1_color, selectcolor=level1_color)
+med_button.grid(row=0,column=2)
+long_button = Radiobutton(ex_option_frame, text = "Long", variable=explanation_type, value = 2, font = ("Satoshi", 10), fg=tertiary_color, bg=level1_color, activeforeground=primary_color, activebackground=level1_color, selectcolor=level1_color)
+long_button.grid(row=0,column=3)
+
 #submit function
 def submit():
     #get results
-    score, text = get_info(float(serv_entry.get()), float(cal_entry.get()), float(sat_fat_entry.get()), float(sodium_entry.get()), float(fiber_entry.get()), float(sugar_entry.get()), float(protein_entry.get()), beverage=False)
+    score, text = get_info(float(serv_entry.get()), float(cal_entry.get()), float(sat_fat_entry.get()), float(sodium_entry.get()), float(fiber_entry.get()), float(sugar_entry.get()), float(protein_entry.get()), beverage=item_type.get(), verboseness=explanation_type.get())
 
     #create window for summary
+    summary_height = 600
+    if explanation_type.get() == 0:
+        summary_height = 400
+    if explanation_type.get() == 2:
+        summary_height = 1000
+
     summary_window = Toplevel(main_window)
     summary_window.title("Nutrireader Result")
-    summary_window.geometry("600x600")
+    summary_window.geometry("600x" + str(summary_height))
     summary_window.config(bg=level1_color)
     summary_window.resizable(height=None, width=None)
 
@@ -227,11 +257,11 @@ def open_cam():
         
 #submit button
 submit_button = Button(data_frame, text="Submit", font=('Satoshi', '12', 'normal'), bg=level4_color, fg=primary_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=submit)
-submit_button.grid(row=7, column=0, columnspan=3, pady=(20,0))
+submit_button.grid(row=9, column=0, columnspan=3, pady=(20,0))
 
 #Camera button
 submit_button = Button(data_frame, font=('Satoshi', '12', 'normal'), text="Open Camera for Scanning", bg=level4_color, fg=tertiary_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=open_cam)
-submit_button.grid(row=8, column=0, columnspan=3)
+submit_button.grid(row=10, column=0, columnspan=3)
 
 #Credits
 credits_label = Label(main_window, text="Project for the 2023 Steel City Hacks Hackathon by Sanjay Vijay and Jack Whitman", font=('Satoshi', '10', 'italic'), bg = level1_color, fg = secondary_color, pady=20)

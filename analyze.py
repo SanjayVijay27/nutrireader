@@ -6,14 +6,15 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.getenv("GPT_KEY")
 
-def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage):
+def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage, verboseness):
     #Get preliminary subscore for each food item
     features = {}
-    
-    if beverage:
+    type = "food"
+    if beverage == 1:
         #Convert ingredients into unit per hundred milliliters and divide by constant
         features["energy_density"] = cals / serv_size * 100 / 7.15    #kilocalories
         features["sugar"] = sugar / serv_size * 100 / 1.5   #grams
+        type = "drink"
     else:
         #Convert ingredients into unit per hundred grams and divide by constant
         features["energy_density"] = cals / serv_size * 100 / 80    #kilocalories
@@ -39,8 +40,14 @@ def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage):
     #Calculate final nutrition score
     nutrition_score = int(((features["fiber"] + features["protein"] - features["energy_density"] - features["sugar"] - features["sat_fat"] - features["salt"]) + 40) * 2)
 
+    prefix = ""
+    if verboseness == 0:
+        prefix = "Briefly"
+    if verboseness ==2:
+        prefix = "In a detailed manner,"
+
     #Build and submit prompt to OpenAI
-    message = "Explain the nutrition information of a food item with a score of " + str(nutrition_score) + "/100 which has "  + str(cals) + " calories, "  + str(sat_fat) + " grams of saturated fat, " + str(sodium) + " milligrams of sodium, "  + str(fiber) + " grams of fiber, " + str(sugar) + " grams of sugar, and " + str(protein) + " grams of protein in a " + str(serv_size) + " gram serving. Briefly explain potential alternatives."
+    message = prefix + "Explain the nutrition information of a " + type + " item with a health score of " + str(nutrition_score) + "/100 which has "  + str(cals) + " calories, "  + str(sat_fat) + " grams of saturated fat, " + str(sodium) + " milligrams of sodium, "  + str(fiber) + " grams of fiber, " + str(sugar) + " grams of sugar, and " + str(protein) + " grams of protein in a " + str(serv_size) + " gram serving. " + prefix + " explain potential alternatives."
     output = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": message}])
     
     #Return score and message result
