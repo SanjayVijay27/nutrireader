@@ -33,7 +33,6 @@ def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage, 
             if features[key] > 5:
                 features[key] = 5
         else:
-            print("cap")
             if features[key] > 10:
                 features[key] = 10
     

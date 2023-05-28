@@ -10,6 +10,8 @@ from mindee import Client, documents
 #Load .env
 load_dotenv()
 
+
+
 #Init mindee client
 mindee_client = Client(api_key=os.getenv("API_KEY")).add_endpoint(
     account_name=os.getenv("ACCOUNT_NAME"),
@@ -34,6 +36,8 @@ height = 500
 
 #create main window
 main_window = Tk()
+icon = ImageTk.PhotoImage(file="logo.png")
+main_window.wm_iconphoto(False, icon)
 main_window.title("Nutrireader")
 main_window.geometry(str(width) + "x" + str(height))
 main_window.config(bg=level1_color)
@@ -49,7 +53,7 @@ title_label = Label(title_frame,text="Nutrireader",font=("Satoshi", '30', 'bold'
 title_label.pack()
 
 #create description label
-desc_label = Label(title_frame,text="The Best Way to an A in your health",font=("Satoshi", '12', 'bold italic'),bg=level1_color,fg=tertiary_color)
+desc_label = Label(title_frame,text="Nutrition with Nutrireader makes you the leader!",font=("Satoshi", '12', 'bold italic'),bg=level1_color,fg=tertiary_color)
 desc_label.pack()
 
 #create frames, labels, and entries for ingredients
@@ -149,6 +153,7 @@ def submit():
         summary_height = 1000
 
     summary_window = Toplevel(main_window)
+    summary_window.wm_iconphoto(False, icon)
     summary_window.title("Nutrireader Result")
     summary_window.geometry("600x" + str(summary_height))
     summary_window.config(bg=level1_color)
@@ -179,14 +184,6 @@ webcam = cv2.VideoCapture(0)
 def capture():
     result, raw_image = webcam.read()
     if result:
-        #get and display image
-        converted_image = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
-        selected_image = Image.fromarray(converted_image)
-        final_image = ImageTk.PhotoImage(selected_image)
-        display_window = Toplevel(main_window)
-        capture_frame = Label(display_window, image=final_image, bg='red')
-        capture_frame.pack()
-
         #OCR
         image_bytes = cv2.imencode('.jpg', raw_image)[1].tobytes()
         result = mindee_client.doc_from_bytes(image_bytes, "file.jpg").parse(documents.TypeCustomV1, endpoint_name="nutrition_label")
@@ -227,9 +224,6 @@ def capture():
         if (sugar_entry.get() == ""):
             sugar_entry.insert(0, str(0))
 
-        #get rid of windows
-        display_window.destroy()
-    display_window.mainloop()
 
 #open camera function
 def open_cam():
@@ -248,6 +242,7 @@ def open_cam():
     #initialize frame
     cam_window = Toplevel(main_window)
     cam_window.config(bg=level1_color)
+    cam_window.wm_iconphoto(False, icon)
     display_frame = Label(cam_window)
     display_frame.pack()
     capture_button = Button(cam_window, font=('Satoshi', '12', 'normal'), text="Capture", bg=level4_color, fg=error_color, activebackground=level4_color, activeforeground=primary_color, width=50, command=capture)
