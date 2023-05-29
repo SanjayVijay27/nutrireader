@@ -9,16 +9,16 @@ This is our submission for the 2023 Steel City Spring Hackathon. View a demonstr
 ## Try it Out
 
 Clone the repository with the following terminal command:
-    git clone https://github.com/SanjayVijay27/nutrireader.git
+git clone https://github.com/SanjayVijay27/nutrireader.git
 
 Create a virtual environment and install requirements on it:
-    python -m venv .venv
-    .venv\Scripts\activate
-    pip install -r requirements.txt
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 
 Create a .env file and assign your OpenAI API key to GPT_KEY:
-    GPT_KEY="\[API Key]"
-Unfortunately, we will not be sharing our Mindee API key, so you will have to run the program without the OCR.
+GPT_KEY="\[API Key]"
+Unfortunately, we will not be sharing our Mindee API key, so you will have to run the program without the OCR. Comment out lines 16-19 of analyze.py.
 
 Install all files under Satoshi_Complete\Fonts\OTF in order to use the Satoshi font.
 
