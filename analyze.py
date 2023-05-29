@@ -42,7 +42,7 @@ def get_info(serv_size, cals, sat_fat, sodium, fiber, sugar, protein, beverage, 
     prefix = ""
     if verboseness == 0:
         prefix = "Briefly"
-    if verboseness ==2:
+    if verboseness == 2:
         prefix = "In a detailed manner,"
 
     #Build and submit prompt to OpenAI
