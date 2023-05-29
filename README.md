@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 Create a .env file and assign your OpenAI API key to GPT_KEY:
 ```
-GPT_KEY="\[API Key]"
+GPT_KEY="[API Key]"
 ```
 Unfortunately, we will not be sharing our Mindee API key, so you will have to run the program without the OCR. Comment out lines 16-19 of analyze.py.
 
